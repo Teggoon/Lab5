@@ -29,7 +29,7 @@ module Lab5_tb                  ;
   int ct = 0                    ;
   int lk                        ;		   // counts leading spaces for program 3
   int pat_sel                   ;          // LFSR pattern select
-  top_level5_sol dut(.*)            ;          // your top level design goes here 
+  top_level5 dut(.*)            ;          // your top level design goes here 
 
   initial begin	 :initial_loop
 //    static integer fi = $fopen("original_msg.txt","r");
@@ -119,7 +119,7 @@ module Lab5_tb                  ;
     #20ns init = 0             ;
     #60ns; 	                               // wait for 6 clock cycles of nominal 10ns each
     wait(done);                            // wait for DUT's done flag to go high
-    #10ns $display("done at time %t",$time);
+    #30ns $display("done at time %t",$time);
     $display("run decryption:");
     for(int nn=0; nn<64; nn++)			   // count leading underscores
       if(str2[nn]==8'h5f) ct++;  

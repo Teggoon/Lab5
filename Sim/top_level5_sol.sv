@@ -47,9 +47,9 @@ module top_level5_sol(
 		 
 		 
 	  always @(posedge clk) begin  //:clock_loop
-    initQ <= init;
+    initQ = init;
     if(!init)
-	  cycle_ct <= cycle_ct + 1;
+	  cycle_ct = cycle_ct + 1;
     if(!init && initQ) begin //:init_loop  // falling init
 		
     end //:init_loop
@@ -62,22 +62,22 @@ module top_level5_sol(
 			if (alternate_1 == 0) begin
 			
 			// number to go into raddr
-			$display("Num: %h", 8'b1000000 + jl);
+			$display("Num: %h", 8'b1000000 + jl);	
 			
 			// modify raddr
-			raddr <= 8'b1000000 + jl;
+			raddr = 8'b1000000 + jl;
 			
 			// this is different hmm
 			$display("Raddr: %h", raddr);
-			alternate_1 <= 1;
+			alternate_1 = 1;
 			end
 			else begin // alernate_1 = 1
 			$display("data_in: %h", data_in);
-			LFSR[jl] <= data_in ^ 6'h1f;
-			alternate_1 <= 0;
-				if (jl < 7) jl <= jl + 1;
+			LFSR[jl] = data_in ^ 6'h1f;
+			alternate_1 = 0;
+				if (jl < 7) jl = jl + 1;
 				else begin
-					step <= 2;
+					step = 2;
 					raddr = 64;
 				end
 			end
@@ -93,25 +93,25 @@ module top_level5_sol(
 		  end // end of step 1
 		  else if (step == 2) begin
 		  
-				lfsr_trial[0][0] <= data_in^6'h1f;
-				lfsr_trial[1][0] <= data_in^6'h1f;
-				lfsr_trial[2][0] <= data_in^6'h1f;
-				lfsr_trial[3][0] <= data_in^6'h1f;
-				lfsr_trial[4][0] <= data_in^6'h1f;
-				lfsr_trial[5][0] <= data_in^6'h1f;
-				step <= 3;
+				lfsr_trial[0][0] = data_in^6'h1f;
+				lfsr_trial[1][0] = data_in^6'h1f;
+				lfsr_trial[2][0] = data_in^6'h1f;
+				lfsr_trial[3][0] = data_in^6'h1f;
+				lfsr_trial[4][0] = data_in^6'h1f;
+				lfsr_trial[5][0] = data_in^6'h1f;
+				step = 3;
 		  end
 		  
 		  else if (step == 3) begin
 				
 //          $display("trial 0 = %h",lfsr_trial[0][0]);
           for(int kl=0;kl<6;kl++) begin //:trial_loop
-            lfsr_trial[0][kl+1] <= (lfsr_trial[0][kl]<<1)+(^(lfsr_trial[0][kl]&LFSR_ptrn[0]));   
-            lfsr_trial[1][kl+1] <= (lfsr_trial[1][kl]<<1)+(^(lfsr_trial[1][kl]&LFSR_ptrn[1]));   
-            lfsr_trial[2][kl+1] <= (lfsr_trial[2][kl]<<1)+(^(lfsr_trial[2][kl]&LFSR_ptrn[2]));   
-            lfsr_trial[3][kl+1] <= (lfsr_trial[3][kl]<<1)+(^(lfsr_trial[3][kl]&LFSR_ptrn[3]));   
-            lfsr_trial[4][kl+1] <= (lfsr_trial[4][kl]<<1)+(^(lfsr_trial[4][kl]&LFSR_ptrn[4]));   
-            lfsr_trial[5][kl+1] <= (lfsr_trial[5][kl]<<1)+(^(lfsr_trial[5][kl]&LFSR_ptrn[5]));   
+            lfsr_trial[0][kl+1] = (lfsr_trial[0][kl]<<1)+(^(lfsr_trial[0][kl]&LFSR_ptrn[0]));   
+            lfsr_trial[1][kl+1] = (lfsr_trial[1][kl]<<1)+(^(lfsr_trial[1][kl]&LFSR_ptrn[1]));   
+            lfsr_trial[2][kl+1] = (lfsr_trial[2][kl]<<1)+(^(lfsr_trial[2][kl]&LFSR_ptrn[2]));   
+            lfsr_trial[3][kl+1] = (lfsr_trial[3][kl]<<1)+(^(lfsr_trial[3][kl]&LFSR_ptrn[3]));   
+            lfsr_trial[4][kl+1] = (lfsr_trial[4][kl]<<1)+(^(lfsr_trial[4][kl]&LFSR_ptrn[4]));   
+            lfsr_trial[5][kl+1] = (lfsr_trial[5][kl]<<1)+(^(lfsr_trial[5][kl]&LFSR_ptrn[5]));   
             $display("trials %d %h %h %h %h %h %h    %h",  kl,
 				 lfsr_trial[0][kl+1],
 				 lfsr_trial[1][kl+1],
@@ -127,24 +127,24 @@ module top_level5_sol(
             $display("mm = %d  lfsr_trial[mm] = %h, LFSR[6] = %h",
 			     mm, lfsr_trial[mm][6], LFSR[6]); 
 		    if(lfsr_trial[mm][6] == LFSR[6]) begin
-			  foundit <= mm;
+			  foundit = mm;
 			  $display("foundit = %d LFSR[6] = %h",foundit,LFSR[6]);
             end
 		  end //:ureka_loop
 		  
 		  $display("foundit fer sure = %d",foundit);		
 		  
-		  step <= 4;
+		  step = 4;
 		  
 		  end // end of step 2
 		  						   
 		  else if (step == 4) begin 
-		    LFSR[jm+1] <= (LFSR[jm]<<1)+(^(LFSR[jm]&LFSR_ptrn[foundit]));
+		    LFSR[jm+1] = (LFSR[jm]<<1)+(^(LFSR[jm]&LFSR_ptrn[foundit]));
           for(int mn=7;mn<64-7;mn++) 
 				begin
-				raddr <= 64 + mn - 7;
-				waddr <= mn - 7;
-				data_out <= data_in^{2'b0,LFSR[mn-7]};
+				raddr = 64 + mn - 7;
+				waddr = mn - 7;
+				data_out = data_in^{2'b0,LFSR[mn-7]};
 			//$display("%dth core = %h LFSR = %h",mn,data_out,LFSR[mn-7]);
 				
 		 /*	
@@ -156,7 +156,7 @@ module top_level5_sol(
 				end 
          #10ns;
          for(km=0; km<64; km++) begin
-				raddr <= km;
+				raddr = km;
 				#10ns;
             if(data_in==8'h5f) continue;
             else break;  
@@ -168,10 +168,10 @@ module top_level5_sol(
           //$display("underscores to %d th",km);
           for(int kl=0; kl<64; kl++) 
 			 begin
-			 raddr <= kl + km;
-			 waddr <= kl;
+			 raddr = kl + km;
+			 waddr = kl;
 			 #10ns;
-			 data_out <= data_in;
+			 data_out = data_in;
 		    //$display("%dth core = %h",kl,data_in);
 			 
 			 /*
@@ -179,15 +179,15 @@ module top_level5_sol(
 		    $display("%dth core = %h",kl,dm1.core[kl]);
 			 */
           end
-			 if (jm < 63) jm <= jm + 1;
-			 else step <= 5;
+			 if (jm < 63) jm = jm + 1;
+			 else step = 5;
 		end // end of step 3
 		else if (step == 5) begin
 			for (int i = 0; i <= 60; i++) begin
 				raddr = i + 71;
 				waddr = i;
 				#10ns;
-				data_out <= {2'b0, LFSR[i]} ^ data_in;
+				data_out = {2'b0, LFSR[i]} ^ data_in;
 			end // end of test loop
 		end // end of step 4
 	  end   //:loop2
