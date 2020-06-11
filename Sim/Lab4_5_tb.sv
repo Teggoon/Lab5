@@ -125,7 +125,7 @@ module Lab5_tb                  ;
       if(str2[nn]==8'h5f) ct++;  
 	  else break;
 	$display("ct = %d",ct);
-    for(int n=0; n<str_len; n++)
+      for(int n=0; n<str_len; n++)
       $display("%d bench msg: %h dut msg: %h    %s",
           n, str2[n+ct], dut.dm1.core[n], dut.dm1.core[n]);   
 //    $fclose(fi);      

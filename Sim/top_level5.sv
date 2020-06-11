@@ -65,10 +65,13 @@ always @(posedge clk) begin
 scram = data_out;
 data_in = unscram;
 
-if (cycle_ct > 182 && cycle_ct < 247) begin
+
+// Step 4: cycle_ct is 185
+
+if (cycle_ct > 184 && cycle_ct < 249) begin
 	$display("Foundkm: %d, scram: %h, km: %d", foundKm, scram, km);
 	if (scram != 8'h5f && foundKm != 1) begin
-		km = cycle_ct - 183 - 11;
+		km = cycle_ct - 185 - 11;
 		foundKm = 1;
 	end
 end
@@ -148,7 +151,7 @@ end
 
 //cycle_ct is currently at 83
 
-if (cycle_ct > 82 && cycle_ct < 183) begin
+if (cycle_ct > 82 && cycle_ct < 185) begin
 	i = ((cycle_ct - 83) >> 1) + 7;
 	if (cycle_ct & 1'b1 == 1) begin // if is first
 		//$display("cycle_ct: %d. i: %d", cycle_ct, i);
@@ -176,25 +179,26 @@ end
   
 
 
-// cycle_ct = 247
-if (cycle_ct > 246 && cycle_ct < 377) begin
-	i = (cycle_ct - 247) >> 1;
+// cycle_ct = 249
+if (cycle_ct > 248 && cycle_ct < 379) begin
+	i = (cycle_ct - 249) >> 1;
 
 	if (cycle_ct & 1'b1 == 1) begin 	// first 
 		$display("cycle_ct: %d. i: %d", cycle_ct, i);
 		raddr = i + km + 1;
-		waddr = i - 1;
+		waddr = i - 3;
 		write_en = 1;
 	end
 	else begin								// second
 		//$display("cycle_ct: %d. i: %d", cycle_ct, i);
 		raddr = i + km + 1;
-		waddr = i - 1;
+		waddr = i - 3;
 		write_en = 1;
 		unscram = scram;
 	end
 	
 end
+
 
   
 end
