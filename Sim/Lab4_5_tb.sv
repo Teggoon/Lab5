@@ -49,7 +49,7 @@ module Lab5_tb                  ;
     LFSR_ptrn[5] = 6'h39;
 // set preamble lengths for the program runs (always > 6)
 // ***** choose any value > 6 *****
-    pre_length                    = 10;    // values 7 to 63 recommended
+    pre_length                    = 7;    // values 7 to 63 recommended
     if(pre_length < 7) begin
       $display("illegal preamble length chosen, overriding with 8");
       pre_length =  8;                     // override < 6 with a legal value
